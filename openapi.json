@@ -1,0 +1,2370 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "TranslatorSage API",
+    "description": "TranslatorSage API orchestrator. Compatible with ElevenLabs SDK shapes where possible. All amounts in BIGINT micros ($1 = 1,000,000 micros).",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/healthz": {
+      "get": {
+        "summary": "Healthz",
+        "operationId": "healthz_healthz_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Healthz Healthz Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "Root",
+        "operationId": "root__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Root  Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/consumers/signup": {
+      "post": {
+        "tags": [
+          "consumers"
+        ],
+        "summary": "Signup",
+        "description": "Create a tsage_api.consumers row for the authed Supabase user.\n\nRuns AFTER Supabase Auth email verification. Grants the $2 welcome gift,\nissues a first API key, and resolves the referral code if provided.",
+        "operationId": "signup_v1_consumers_signup_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignupRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignupResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/consumers/me": {
+      "get": {
+        "tags": [
+          "consumers"
+        ],
+        "summary": "Get Me",
+        "operationId": "get_me_v1_consumers_me_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConsumerProfile"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/consumers/me/api-keys": {
+      "get": {
+        "tags": [
+          "consumers"
+        ],
+        "summary": "List Api Keys",
+        "operationId": "list_api_keys_v1_consumers_me_api_keys_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ApiKeyPublic"
+                  },
+                  "title": "Response List Api Keys V1 Consumers Me Api Keys Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "consumers"
+        ],
+        "summary": "Create Api Key",
+        "operationId": "create_api_key_v1_consumers_me_api_keys_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateApiKeyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateApiKeyResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/consumers/me/api-keys/{api_key_id}": {
+      "delete": {
+        "tags": [
+          "consumers"
+        ],
+        "summary": "Revoke Api Key",
+        "operationId": "revoke_api_key_v1_consumers_me_api_keys__api_key_id__delete",
+        "parameters": [
+          {
+            "name": "api_key_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Api Key Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Revoke Api Key V1 Consumers Me Api Keys  Api Key Id  Delete"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/consumers/me/usage": {
+      "get": {
+        "tags": [
+          "consumers"
+        ],
+        "summary": "Get Usage",
+        "operationId": "get_usage_v1_consumers_me_usage_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Usage V1 Consumers Me Usage Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/text-to-speech/{voice_id}": {
+      "post": {
+        "tags": [
+          "tts"
+        ],
+        "summary": "Text To Speech",
+        "operationId": "text_to_speech_v1_text_to_speech__voice_id__post",
+        "parameters": [
+          {
+            "name": "voice_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Voice Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TTSRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/speech-to-text": {
+      "post": {
+        "tags": [
+          "stt"
+        ],
+        "summary": "Speech To Text",
+        "operationId": "speech_to_text_v1_speech_to_text_post",
+        "parameters": [
+          {
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "raw",
+                "standard",
+                "live",
+                "medical"
+              ],
+              "type": "string",
+              "default": "standard",
+              "title": "Model"
+            }
+          },
+          {
+            "name": "duration_hint_seconds",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Duration Hint Seconds"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_speech_to_text_v1_speech_to_text_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/translate": {
+      "post": {
+        "tags": [
+          "translation"
+        ],
+        "summary": "Translate",
+        "operationId": "translate_v1_translate_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TranslateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TranslateResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/dubbing": {
+      "post": {
+        "tags": [
+          "dubbing"
+        ],
+        "summary": "Create Dubbing Job",
+        "operationId": "create_dubbing_job_v1_dubbing_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DubbingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Create Dubbing Job V1 Dubbing Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/dubbing/{job_id}": {
+      "get": {
+        "tags": [
+          "dubbing"
+        ],
+        "summary": "Get Dubbing Job",
+        "operationId": "get_dubbing_job_v1_dubbing__job_id__get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Dubbing Job V1 Dubbing  Job Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/dubbing/{job_id}/audio": {
+      "get": {
+        "tags": [
+          "dubbing"
+        ],
+        "summary": "Get Dubbing Audio",
+        "operationId": "get_dubbing_audio_v1_dubbing__job_id__audio_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Dubbing Audio V1 Dubbing  Job Id  Audio Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/audio-isolation": {
+      "post": {
+        "tags": [
+          "audio-isolation"
+        ],
+        "summary": "Audio Isolation",
+        "operationId": "audio_isolation_v1_audio_isolation_post",
+        "parameters": [
+          {
+            "name": "duration_seconds",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 60.0,
+              "title": "Duration Seconds"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_audio_isolation_v1_audio_isolation_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/sound-effects": {
+      "post": {
+        "tags": [
+          "sfx"
+        ],
+        "summary": "Sound Effects",
+        "operationId": "sound_effects_v1_sound_effects_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SFXRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/voice-design": {
+      "post": {
+        "tags": [
+          "voice-design"
+        ],
+        "summary": "Voice Design",
+        "operationId": "voice_design_v1_voice_design_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoiceDesignRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/voices": {
+      "get": {
+        "tags": [
+          "voices"
+        ],
+        "summary": "List Voices",
+        "operationId": "list_voices_v1_voices_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VoicePublic"
+                  },
+                  "title": "Response List Voices V1 Voices Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/voices/add": {
+      "post": {
+        "tags": [
+          "voices"
+        ],
+        "summary": "Add Voice",
+        "operationId": "add_voice_v1_voices_add_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoiceAddRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Add Voice V1 Voices Add Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/voices/{voice_id}/professional": {
+      "post": {
+        "tags": [
+          "voices"
+        ],
+        "summary": "Promote To Pvc",
+        "operationId": "promote_to_pvc_v1_voices__voice_id__professional_post",
+        "parameters": [
+          {
+            "name": "voice_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Voice Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Promote To Pvc V1 Voices  Voice Id  Professional Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/voices/{voice_id}": {
+      "delete": {
+        "tags": [
+          "voices"
+        ],
+        "summary": "Delete Voice",
+        "operationId": "delete_voice_v1_voices__voice_id__delete",
+        "parameters": [
+          {
+            "name": "voice_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Voice Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Delete Voice V1 Voices  Voice Id  Delete"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/align": {
+      "post": {
+        "tags": [
+          "align-diarize"
+        ],
+        "summary": "Forced Alignment",
+        "operationId": "forced_alignment_v1_align_post",
+        "parameters": [
+          {
+            "name": "duration_seconds",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 60.0,
+              "title": "Duration Seconds"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_forced_alignment_v1_align_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/diarize": {
+      "post": {
+        "tags": [
+          "align-diarize"
+        ],
+        "summary": "Diarize",
+        "operationId": "diarize_v1_diarize_post",
+        "parameters": [
+          {
+            "name": "duration_seconds",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 60.0,
+              "title": "Duration Seconds"
+            }
+          },
+          {
+            "name": "num_speakers_hint",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Num Speakers Hint"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_diarize_v1_diarize_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/dialogue": {
+      "post": {
+        "tags": [
+          "dialogue"
+        ],
+        "summary": "Dialogue",
+        "operationId": "dialogue_v1_dialogue_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DialogueRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/voice-changer": {
+      "post": {
+        "tags": [
+          "voice-changer"
+        ],
+        "summary": "Voice Changer",
+        "operationId": "voice_changer_v1_voice_changer_post",
+        "parameters": [
+          {
+            "name": "duration_seconds",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 60.0,
+              "title": "Duration Seconds"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_voice_changer_v1_voice_changer_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/agents/{agent_id}/converse": {
+      "post": {
+        "tags": [
+          "agents"
+        ],
+        "summary": "Converse",
+        "operationId": "converse_v1_agents__agent_id__converse_post",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Agent Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConverseRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Converse V1 Agents  Agent Id  Converse Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/webhooks/dodo": {
+      "post": {
+        "tags": [
+          "webhooks"
+        ],
+        "summary": "Dodo Webhook",
+        "operationId": "dodo_webhook_webhooks_dodo_post",
+        "parameters": [
+          {
+            "name": "webhook-id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Webhook-Id"
+            }
+          },
+          {
+            "name": "webhook-timestamp",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Webhook-Timestamp"
+            }
+          },
+          {
+            "name": "webhook-signature",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Webhook-Signature"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Dodo Webhook Webhooks Dodo Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiKeyPublic": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "prefix": {
+            "type": "string",
+            "title": "Prefix"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "last_used_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Used At"
+          },
+          "revoked_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Revoked At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "prefix",
+          "created_at",
+          "last_used_at",
+          "revoked_at"
+        ],
+        "title": "ApiKeyPublic"
+      },
+      "Body_audio_isolation_v1_audio_isolation_post": {
+        "properties": {
+          "audio": {
+            "type": "string",
+            "format": "binary",
+            "title": "Audio"
+          }
+        },
+        "type": "object",
+        "required": [
+          "audio"
+        ],
+        "title": "Body_audio_isolation_v1_audio_isolation_post"
+      },
+      "Body_diarize_v1_diarize_post": {
+        "properties": {
+          "audio": {
+            "type": "string",
+            "format": "binary",
+            "title": "Audio"
+          }
+        },
+        "type": "object",
+        "required": [
+          "audio"
+        ],
+        "title": "Body_diarize_v1_diarize_post"
+      },
+      "Body_forced_alignment_v1_align_post": {
+        "properties": {
+          "audio": {
+            "type": "string",
+            "format": "binary",
+            "title": "Audio"
+          },
+          "transcript": {
+            "type": "string",
+            "title": "Transcript"
+          }
+        },
+        "type": "object",
+        "required": [
+          "audio",
+          "transcript"
+        ],
+        "title": "Body_forced_alignment_v1_align_post"
+      },
+      "Body_speech_to_text_v1_speech_to_text_post": {
+        "properties": {
+          "audio": {
+            "type": "string",
+            "format": "binary",
+            "title": "Audio"
+          }
+        },
+        "type": "object",
+        "required": [
+          "audio"
+        ],
+        "title": "Body_speech_to_text_v1_speech_to_text_post"
+      },
+      "Body_voice_changer_v1_voice_changer_post": {
+        "properties": {
+          "audio": {
+            "type": "string",
+            "format": "binary",
+            "title": "Audio"
+          },
+          "target_voice_id": {
+            "type": "string",
+            "title": "Target Voice Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "audio",
+          "target_voice_id"
+        ],
+        "title": "Body_voice_changer_v1_voice_changer_post"
+      },
+      "ConsumerProfile": {
+        "properties": {
+          "consumer_id": {
+            "type": "string",
+            "title": "Consumer Id"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "referral_code": {
+            "type": "string",
+            "title": "Referral Code"
+          },
+          "balance_micros": {
+            "type": "integer",
+            "title": "Balance Micros"
+          },
+          "balance_usd": {
+            "type": "number",
+            "title": "Balance Usd"
+          },
+          "welcome_gift_claimed": {
+            "type": "boolean",
+            "title": "Welcome Gift Claimed"
+          },
+          "api_key_count": {
+            "type": "integer",
+            "title": "Api Key Count"
+          }
+        },
+        "type": "object",
+        "required": [
+          "consumer_id",
+          "email",
+          "referral_code",
+          "balance_micros",
+          "balance_usd",
+          "welcome_gift_claimed",
+          "api_key_count"
+        ],
+        "title": "ConsumerProfile"
+      },
+      "ConverseRequest": {
+        "properties": {
+          "client_offer_sdp": {
+            "type": "string",
+            "title": "Client Offer Sdp",
+            "description": "WebRTC offer SDP from browser"
+          },
+          "hints": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hints"
+          }
+        },
+        "type": "object",
+        "required": [
+          "client_offer_sdp"
+        ],
+        "title": "ConverseRequest"
+      },
+      "CreateApiKeyRequest": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "concurrent_limit": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 10000.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Concurrent Limit"
+          }
+        },
+        "type": "object",
+        "title": "CreateApiKeyRequest"
+      },
+      "CreateApiKeyResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "prefix": {
+            "type": "string",
+            "title": "Prefix"
+          },
+          "plaintext": {
+            "type": "string",
+            "title": "Plaintext"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "prefix",
+          "plaintext"
+        ],
+        "title": "CreateApiKeyResponse"
+      },
+      "DialogueRequest": {
+        "properties": {
+          "turns": {
+            "items": {
+              "$ref": "#/components/schemas/DialogueTurn"
+            },
+            "type": "array",
+            "maxItems": 200,
+            "minItems": 1,
+            "title": "Turns"
+          }
+        },
+        "type": "object",
+        "required": [
+          "turns"
+        ],
+        "title": "DialogueRequest"
+      },
+      "DialogueTurn": {
+        "properties": {
+          "speaker": {
+            "type": "string",
+            "title": "Speaker"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          }
+        },
+        "type": "object",
+        "required": [
+          "speaker",
+          "text"
+        ],
+        "title": "DialogueTurn"
+      },
+      "DubbingRequest": {
+        "properties": {
+          "source_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Url"
+          },
+          "source_lang": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Lang"
+          },
+          "target_lang": {
+            "type": "string",
+            "title": "Target Lang"
+          },
+          "num_speakers": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Num Speakers"
+          },
+          "watermark": {
+            "type": "boolean",
+            "title": "Watermark",
+            "default": true
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "target_lang"
+        ],
+        "title": "DubbingRequest"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "SFXRequest": {
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "maxLength": 600,
+            "minLength": 1,
+            "title": "Prompt"
+          },
+          "duration_seconds": {
+            "type": "number",
+            "maximum": 11.0,
+            "minimum": 0.5,
+            "title": "Duration Seconds",
+            "default": 5.0
+          }
+        },
+        "type": "object",
+        "required": [
+          "prompt"
+        ],
+        "title": "SFXRequest"
+      },
+      "SignupRequest": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "referral_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Referral Code"
+          },
+          "signup_ip": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Signup Ip"
+          },
+          "device_fingerprint": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Device Fingerprint"
+          }
+        },
+        "type": "object",
+        "required": [
+          "email"
+        ],
+        "title": "SignupRequest"
+      },
+      "SignupResponse": {
+        "properties": {
+          "consumer_id": {
+            "type": "string",
+            "title": "Consumer Id"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "referral_code": {
+            "type": "string",
+            "title": "Referral Code"
+          },
+          "balance_micros": {
+            "type": "integer",
+            "title": "Balance Micros"
+          },
+          "balance_usd": {
+            "type": "number",
+            "title": "Balance Usd"
+          },
+          "api_key": {
+            "type": "string",
+            "title": "Api Key"
+          },
+          "api_key_id": {
+            "type": "string",
+            "title": "Api Key Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "consumer_id",
+          "email",
+          "referral_code",
+          "balance_micros",
+          "balance_usd",
+          "api_key",
+          "api_key_id"
+        ],
+        "title": "SignupResponse"
+      },
+      "TTSRequest": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "maxLength": 50000,
+            "minLength": 1,
+            "title": "Text"
+          },
+          "model_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model Id",
+            "default": "tsage-tts-v1"
+          },
+          "voice_settings": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Voice Settings"
+          },
+          "output_format": {
+            "type": "string",
+            "title": "Output Format",
+            "default": "mp3_44100_128"
+          }
+        },
+        "type": "object",
+        "required": [
+          "text"
+        ],
+        "title": "TTSRequest"
+      },
+      "TranslateRequest": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "maxLength": 50000,
+            "minLength": 1,
+            "title": "Text"
+          },
+          "source_lang": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Lang"
+          },
+          "target_lang": {
+            "type": "string",
+            "title": "Target Lang"
+          }
+        },
+        "type": "object",
+        "required": [
+          "text",
+          "target_lang"
+        ],
+        "title": "TranslateRequest"
+      },
+      "TranslateResponse": {
+        "properties": {
+          "translated_text": {
+            "type": "string",
+            "title": "Translated Text"
+          },
+          "source_lang": {
+            "type": "string",
+            "title": "Source Lang"
+          },
+          "target_lang": {
+            "type": "string",
+            "title": "Target Lang"
+          },
+          "units_billed": {
+            "type": "number",
+            "title": "Units Billed"
+          },
+          "cost_micros": {
+            "type": "integer",
+            "title": "Cost Micros"
+          },
+          "balance_after_micros": {
+            "type": "integer",
+            "title": "Balance After Micros"
+          }
+        },
+        "type": "object",
+        "required": [
+          "translated_text",
+          "source_lang",
+          "target_lang",
+          "units_billed",
+          "cost_micros",
+          "balance_after_micros"
+        ],
+        "title": "TranslateResponse"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "VoiceAddRequest": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "reference_audio_url": {
+            "type": "string",
+            "title": "Reference Audio Url"
+          },
+          "lang_support": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lang Support"
+          },
+          "consent_doc_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Consent Doc Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "reference_audio_url"
+        ],
+        "title": "VoiceAddRequest"
+      },
+      "VoiceDesignRequest": {
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Prompt"
+          },
+          "preview_text": {
+            "type": "string",
+            "maxLength": 10000,
+            "minLength": 1,
+            "title": "Preview Text"
+          }
+        },
+        "type": "object",
+        "required": [
+          "prompt",
+          "preview_text"
+        ],
+        "title": "VoiceDesignRequest"
+      },
+      "VoicePublic": {
+        "properties": {
+          "voice_id": {
+            "type": "string",
+            "title": "Voice Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "ivc",
+              "pvc",
+              "preset",
+              "library"
+            ],
+            "title": "Type"
+          },
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "private",
+              "library"
+            ],
+            "title": "Visibility"
+          },
+          "lang_support": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lang Support"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "voice_id",
+          "name",
+          "type",
+          "visibility",
+          "lang_support",
+          "created_at"
+        ],
+        "title": "VoicePublic"
+      }
+    }
+  }
+}
